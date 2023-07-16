@@ -1,29 +1,47 @@
+import Rectangle from "./Rectangle.js";
+
 export default class Polygon {
     constructor(...points) {
         /**
          * @type {Point[]}
          */
         this.points = points ?? [];
+
+        this.inactivecolor = "darkred";
+        this.activeColor = "red";
+        this.color = this.inactivecolor;
+
+        this.rect = new Rectangle(0, 0, 0, 0);
+        this.rect.recalculate(this.points);
     }
 
     addPoint(p) {
         this.points.push(p);
+        this.update();
+    }
+
+    update(point) {
+        this.rect.recalculate(this.points);
+        if (point) {
+            this.color = this.containsPoint(point) ? this.activeColor : this.inactivecolor;
+            this.rect.update(point);
+        }
     }
 
     draw(context, point) {
-        context.save();
+        this.rect.draw(context);
 
-        context.fillStyle = this.containsPoint(point) ? "red" : "darkred";
-        context.beginPath();
+        context.start();
+
+        context.fillStyle = this.color;
         this.points.forEach((point, index) => {
             context[index === 0 ? "moveTo" : "lineTo"](point.x, point.y);
         });
-        context.closePath();
         context.fill();
 
         this.points.forEach((p) => p.draw(context));
 
-        context.restore();
+        context.end();
     }
 
     containsPoint(point) {

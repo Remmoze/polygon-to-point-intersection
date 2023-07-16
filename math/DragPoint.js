@@ -1,11 +1,10 @@
-export default class Point {
+import Point from "./Point.js";
+
+export default class DragPoint extends Point {
     constructor(x, y, color, size) {
-        this.x = x;
-        this.y = y;
+        super(x, y, color, size);
 
-        this.color = color ?? "green";
-
-        this.size = size ?? 4;
+        this.defaultColor = this.color;
 
         this.held = false;
         this.addEventListeners();
@@ -30,16 +29,7 @@ export default class Point {
         });
     }
 
-    draw(context) {
-        context.save();
-
-        context.fillStyle = this.held ? "white" : this.color;
-        context.beginPath();
-        context.moveTo(this.x, this.y);
-        context.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        context.fill();
-        context.closePath();
-
-        context.restore();
+    update() {
+        this.color = this.held ? "white" : this.defaultColor;
     }
 }
