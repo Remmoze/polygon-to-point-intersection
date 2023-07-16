@@ -23,8 +23,10 @@ export default class Polygon {
     update(point) {
         this.rect.recalculate(this.points);
         if (point) {
-            this.color = this.containsPoint(point) ? this.activeColor : this.inactivecolor;
             this.rect.update(point);
+            if (this.rect.containsPoint(point)) {
+                this.color = this.containsPoint(point) ? this.activeColor : this.inactivecolor;
+            }
         }
     }
 

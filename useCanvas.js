@@ -1,4 +1,4 @@
-function getCanvas() {
+function useCanvas() {
     const canvas = document.querySelector("canvas");
     const context = canvas.getContext("2d");
 
@@ -15,4 +15,4 @@ function getCanvas() {
     return { canvas, context };
 }
 
-export { getCanvas };
+export { useCanvas };

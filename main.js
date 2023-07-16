@@ -1,17 +1,31 @@
-import { getCanvas } from "./canvas.js";
+import { useCanvas } from "./useCanvas.js";
 import DragPoint from "./math/DragPoint.js";
 import Polygon from "./math/Polygon.js";
-import Rectangle from "./math/Rectangle.js";
 
-const { canvas, context } = getCanvas();
+const { canvas, context } = useCanvas();
 
-const pol = new Polygon(
-    new DragPoint(81, 111),
-    new DragPoint(330, 50),
-    new DragPoint(526, 146),
-    new DragPoint(285, 432),
-    new DragPoint(261, 184)
-);
+const polygons = [
+    new Polygon(
+        new DragPoint(125, 75),
+        new DragPoint(564, 192),
+        new DragPoint(691, 34),
+        new DragPoint(769, 460),
+        new DragPoint(651, 209),
+        new DragPoint(754, 625),
+        new DragPoint(349, 211),
+        new DragPoint(390, 366),
+        new DragPoint(135, 491),
+        new DragPoint(42, 235),
+        new DragPoint(282, 342)
+    ),
+    new Polygon(
+        new DragPoint(449, 776),
+        new DragPoint(95, 666),
+        new DragPoint(358, 654),
+        new DragPoint(439, 471),
+        new DragPoint(659, 758)
+    ),
+];
 
 const mainPoint = new DragPoint(400, 400, "yellow", 5);
 
@@ -19,7 +33,7 @@ function draw() {
     context.fillStyle = "#222";
     context.fillRect(0, 0, canvas.width, canvas.height);
 
-    pol.draw(context);
+    polygons.forEach((pol) => pol.draw(context));
     mainPoint.draw(context);
 
     requestAnimationFrame(draw);
@@ -27,7 +41,7 @@ function draw() {
 draw();
 
 function update() {
-    pol.update(mainPoint);
+    polygons.forEach((pol) => pol.update(mainPoint));
     mainPoint.update();
 }
 setInterval(update, 1000 / 60);
@@ -37,5 +51,5 @@ document.querySelector("#addPoint").addEventListener("click", () => {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     };
 
-    pol.addPoint(new DragPoint(randomNumber(100, 700), randomNumber(100, 700)));
+    polygons[0].addPoint(new DragPoint(randomNumber(100, 700), randomNumber(100, 700)));
 });

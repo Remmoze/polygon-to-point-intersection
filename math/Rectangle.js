@@ -49,14 +49,16 @@ export default class Rectangle extends Point {
     }
 
     containsPoint(point) {
-        if (point.x >= this.x && point.x < this.x + this.width && point.y >= this.y && point.y < this.y + this.height) {
+        return (
+            point.x >= this.x && point.x < this.x + this.width && point.y >= this.y && point.y < this.y + this.height
+        );
+    }
+
+    update(point) {
+        if (this.containsPoint(point)) {
             this.lineDash = [5, 2];
         } else {
             this.lineDash = [2, 5];
         }
-    }
-
-    update(point) {
-        this.containsPoint(point);
     }
 }
