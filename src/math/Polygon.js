@@ -30,7 +30,7 @@ export default class Polygon {
         }
     }
 
-    draw(context, point) {
+    draw(context) {
         this.rect.draw(context);
 
         context.start();

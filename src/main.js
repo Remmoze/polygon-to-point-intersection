@@ -1,3 +1,4 @@
+import "./styles/index.css";
 import { useCanvas } from "./useCanvas.js";
 import DragPoint from "./math/DragPoint.js";
 import Polygon from "./math/Polygon.js";
