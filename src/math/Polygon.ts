@@ -1,39 +1,45 @@
 import Rectangle from "./Rectangle";
+import Point from "./Point";
 
 export default class Polygon {
-    constructor(...points) {
-        /**
-         * @type {Point[]}
-         */
+    private readonly points: Point[];
+    private readonly inactiveColor: string;
+    private readonly activeColor: string;
+    private color: string
+
+    private rect: Rectangle;
+
+    constructor(...points: Point[]) {
         this.points = points ?? [];
 
-        this.inactivecolor = "darkred";
+        this.inactiveColor = "darkred";
         this.activeColor = "red";
-        this.color = this.inactivecolor;
+        this.color = this.inactiveColor;
 
         this.rect = new Rectangle(0, 0, 0, 0);
         this.rect.recalculate(this.points);
     }
 
-    addPoint(p) {
-        this.points.push(p);
+    addPoint(point: Point) {
+        this.points.push(point);
         this.update();
     }
 
-    update(point) {
+    update(point?: Point) {
         this.rect.recalculate(this.points);
         if (point) {
             this.rect.update(point);
             if (this.rect.containsPoint(point)) {
-                this.color = this.containsPoint(point) ? this.activeColor : this.inactivecolor;
+                this.color = this.containsPoint(point) ? this.activeColor : this.inactiveColor;
             }
         }
     }
 
-    draw(context) {
+    draw(context: CanvasRenderingContext2D) {
         this.rect.draw(context);
 
-        context.start();
+        context.save();
+        context.beginPath();
 
         context.fillStyle = this.color;
         this.points.forEach((point, index) => {
@@ -43,10 +49,11 @@ export default class Polygon {
 
         this.points.forEach((p) => p.draw(context));
 
-        context.end();
+        context.closePath();
+        context.restore();
     }
 
-    containsPoint(point) {
+    containsPoint(point: Point) {
         let result = false;
         for (let i = 0, j = this.points.length - 1; i < this.points.length; j = i++) {
             const checkY = this.points[i].y > point.y != this.points[j].y > point.y;

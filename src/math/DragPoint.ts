@@ -1,7 +1,10 @@
 import Point from "./Point";
 
 export default class DragPoint extends Point {
-    constructor(x, y, color, size) {
+    defaultColor: string;
+    held: boolean;
+
+    constructor(x: number, y: number, color?: string, size?: number) {
         super(x, y, color, size);
 
         this.defaultColor = this.color;
@@ -11,14 +14,14 @@ export default class DragPoint extends Point {
     }
 
     addEventListeners() {
-        window.addEventListener("mousedown", (e) => {
+        window.addEventListener("mousedown", (e: MouseEvent) => {
             if ((e.offsetX - this.x) ** 2 + (e.offsetY - this.y) ** 2 < this.size ** 2) {
                 this.held = true;
             } else {
                 this.held = false;
             }
         });
-        window.addEventListener("mousemove", (e) => {
+        window.addEventListener("mousemove", (e: MouseEvent) => {
             if (this.held) {
                 this.x = e.offsetX;
                 this.y = e.offsetY;

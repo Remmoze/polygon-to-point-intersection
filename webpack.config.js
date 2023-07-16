@@ -4,27 +4,21 @@ const path = require("path");
 
 module.exports = {
     mode: "none",
-    entry: "./src/main.js",
+    entry: "./src/main.ts",
     resolve: {
-        extensions: ["js", "ts"],
+        extensions: [".ts", ".js"],
     },
     module: {
         rules: [
             {
                 test: /\.(js|ts)$/,
+                exclude: /node_modules/,
                 include: /src/,
-                loader: 'babel-loader',
+                loader: "babel-loader",
                 options: {
-                    cacheDirectory: true,
-                    presets: [
-                        '@babel/preset-env',
-                        '@babel/preset-typescript',
-                    ],
-                    plugins: [
-                        '@babel/transform-runtime',
-                        '@babel/plugin-proposal-class-properties',
-                    ]
-                }
+                    presets: ["@babel/preset-env", "@babel/preset-typescript"],
+                    plugins: ["@babel/plugin-transform-runtime", "@babel/plugin-proposal-class-properties"],
+                },
             },
             { test: /\.css$/, use: ["style-loader", "css-loader"], exclude: /node_modules/ },
         ],

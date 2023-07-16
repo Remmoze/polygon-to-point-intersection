@@ -47,10 +47,13 @@ function update() {
 }
 setInterval(update, 1000 / 60);
 
-document.querySelector("#addPoint").addEventListener("click", () => {
-    const randomNumber = (min, max) => {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    };
+const addButton = document.querySelector("#addPoint");
+if (addButton) {
+    addButton.addEventListener("click", () => {
+        const randomNumber = (min: number, max: number): number => {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        };
 
-    polygons[0].addPoint(new DragPoint(randomNumber(100, 700), randomNumber(100, 700)));
-});
+        polygons[0].addPoint(new DragPoint(randomNumber(100, 700), randomNumber(100, 700)));
+    });
+}

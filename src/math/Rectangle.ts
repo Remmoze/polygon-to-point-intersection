@@ -1,8 +1,16 @@
 import Point from "./Point";
 
-export default class Rectangle extends Point {
-    constructor(x, y, width, height) {
-        super(x, y);
+export default class Rectangle {
+    x: number;
+    y: number;
+    color: string;
+    private width: number;
+    private height: number;
+    private lineDash: [number, number];
+
+    constructor(x: number, y: number, width: number, height: number) {
+        this.x = x;
+        this.y = y;
         this.color = "cyan";
         this.width = width ?? 100;
         this.height = height ?? 100;
@@ -10,7 +18,7 @@ export default class Rectangle extends Point {
         this.lineDash = [2, 5];
     }
 
-    recalculate(points) {
+    recalculate(points: Point[]) {
         const { minX, minY, maxX, maxY } = points.reduce(
             (state, point) => {
                 state.minX = Math.min(state.minX, point.x);
@@ -33,8 +41,9 @@ export default class Rectangle extends Point {
         this.height = maxY - minY;
     }
 
-    draw(context) {
-        context.start();
+    draw(context: CanvasRenderingContext2D) {
+        context.save();
+        context.beginPath();
 
         context.strokeStyle = this.color;
         context.setLineDash(this.lineDash);
@@ -45,16 +54,17 @@ export default class Rectangle extends Point {
         context.lineTo(this.x, this.y);
         context.stroke();
 
-        context.end();
+        context.closePath();
+        context.restore();
     }
 
-    containsPoint(point) {
+    containsPoint(point: Point) {
         return (
             point.x >= this.x && point.x < this.x + this.width && point.y >= this.y && point.y < this.y + this.height
         );
     }
 
-    update(point) {
+    update(point: Point) {
         if (this.containsPoint(point)) {
             this.lineDash = [5, 2];
         } else {
