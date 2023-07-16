@@ -1,3 +1,7 @@
+import { getCanvas } from "./canvas.js";
+import Point from "./point.js";
+import Polygon from "./polygon.js";
+
 const { canvas, context } = getCanvas();
 
 const pol = new Polygon(
