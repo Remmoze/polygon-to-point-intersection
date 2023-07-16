@@ -1,4 +1,4 @@
-import Rectangle from "./Rectangle.js";
+import Rectangle from "./Rectangle";
 
 export default class Polygon {
     constructor(...points) {

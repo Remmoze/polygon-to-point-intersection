@@ -1,7 +1,7 @@
 import "./styles/index.css";
-import { useCanvas } from "./useCanvas.js";
-import DragPoint from "./math/DragPoint.js";
-import Polygon from "./math/Polygon.js";
+import { useCanvas } from "./useCanvas";
+import DragPoint from "./math/DragPoint";
+import Polygon from "./math/Polygon";
 
 const { canvas, context } = useCanvas();
 

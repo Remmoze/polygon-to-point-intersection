@@ -1,4 +1,4 @@
-import Point from "./Point.js";
+import Point from "./Point";
 
 export default class DragPoint extends Point {
     constructor(x, y, color, size) {
